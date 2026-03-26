@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SmartBooking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Landing/Landing.css" asp-append-version="true" />
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">
+                <div class="nav-logo-icon">
+                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="8" width="36" height="34" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                        <path d="M16 6v4M32 6v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M6 18h36" stroke="currentColor" stroke-width="2.5"/>
+                        <rect x="13" y="25" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.9"/>
+                        <rect x="21" y="25" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.5"/>
+                        <rect x="29" y="25" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.25"/>
+                    </svg>
+                </div>
+                <span>SmartBooking</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Características</a>
+                <a href="#testimonials">Casos de éxito</a>
+                <a href="#pricing">Planes</a>
+            </div>
+            <div class="nav-actions">
+                <a asp-controller="Account" asp-action="Login" class="btn-nav-outline">Iniciar sesión</a>
+                <a asp-controller="Account" asp-action="Register" class="btn-nav-solid">Registrate gratis</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#features">Características</a>
+            <a href="#testimonials">Casos de éxito</a>
+            <a href="#pricing">Planes</a>
+            <a asp-controller="Account" asp-action="Login">Iniciar sesión</a>
+            <a asp-controller="Account" asp-action="Register" class="mobile-cta">Comenzar gratis</a>
+        </div>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="nav-logo">
+                    <div class="nav-logo-icon" style="color:white">
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="6" y="8" width="36" height="34" rx="4" stroke="currentColor" stroke-width="2.5" fill="none"/>
+                            <path d="M16 6v4M32 6v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M6 18h36" stroke="currentColor" stroke-width="2.5"/>
+                            <rect x="13" y="25" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.9"/>
+                            <rect x="21" y="25" width="6" height="6" rx="1.5" fill="currentColor" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <span style="color:white;font-family:'Sora',sans-serif;font-weight:700;font-size:1.2rem">SmartBooking</span>
+                </div>
+                <p>La plataforma de agendamiento inteligente para profesionales independientes.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Producto</h4>
+                    <a href="#features">Características</a>
+                    <a href="#pricing">Precios</a>
+                    <a href="#">Integraciones</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Empresa</h4>
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contacto</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Privacidad</a>
+                    <a href="#">Términos</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SmartBooking. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="~/js/Landing/Landing.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

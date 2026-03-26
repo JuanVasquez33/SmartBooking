@@ -1,0 +1,386 @@
+@{
+    ViewData["Title"] = "Agenda inteligente para profesionales";
+    Layout = "~/Views/Shared/_LandingLayout.cshtml";
+}
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg">
+        <div class="hero-orb orb-1"></div>
+        <div class="hero-orb orb-2"></div>
+        <div class="hero-grid"></div>
+    </div>
+
+    <div class="hero-inner">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Más de 2.000 profesionales confían en nosotros
+            </div>
+
+            <h1 class="hero-title">
+                Deja de perder<br/>
+                <span class="title-accent">citas y clientes</span><br/>
+                por siempre
+            </h1>
+
+            <p class="hero-subtitle">
+                SmartBooking automatiza tu agenda para que tú te enfocas en lo que realmente importa: tu trabajo. Sin WhatsApps, sin llamadas, sin doble agendamiento.
+            </p>
+
+            <div class="hero-actions">
+                <a asp-controller="Account" asp-action="Register" class="btn-primary-lg">
+                    Empieza gratis hoy
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#features" class="btn-ghost-lg">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                    Ver cómo funciona
+                </a>
+            </div>
+
+            <div class="hero-trust">
+                <div class="trust-avatars">
+                    <div class="avatar av1">JV</div>
+                    <div class="avatar av2">SA</div>
+                    <div class="avatar av3">MP</div>
+                    <div class="avatar av4">CR</div>
+                </div>
+                <p><strong>+2.000 profesionales</strong> ya optimizaron su agenda</p>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="dashboard-mockup">
+                <div class="mockup-header">
+                    <div class="mockup-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="mockup-title">Panel de citas — Hoy</span>
+                </div>
+                <div class="mockup-body">
+                    <div class="mockup-date">
+                        <span class="date-day">Lunes</span>
+                        <span class="date-num">23</span>
+                        <span class="date-month">Marzo 2026</span>
+                    </div>
+                    <div class="appointment-list">
+                        <div class="appointment confirmed">
+                            <div class="apt-time">9:00 AM</div>
+                            <div class="apt-info">
+                                <span class="apt-name">María Pérez</span>
+                                <span class="apt-service">Consulta general · 30 min</span>
+                            </div>
+                            <div class="apt-badge confirmed-badge">Confirmada</div>
+                        </div>
+                        <div class="appointment confirmed">
+                            <div class="apt-time">10:00 AM</div>
+                            <div class="apt-info">
+                                <span class="apt-name">Carlos Ruiz</span>
+                                <span class="apt-service">Asesoría · 45 min</span>
+                            </div>
+                            <div class="apt-badge confirmed-badge">Confirmada</div>
+                        </div>
+                        <div class="appointment pending">
+                            <div class="apt-time">2:00 PM</div>
+                            <div class="apt-info">
+                                <span class="apt-name">Ana González</span>
+                                <span class="apt-service">Seguimiento · 60 min</span>
+                            </div>
+                            <div class="apt-badge pending-badge">Pendiente</div>
+                        </div>
+                        <div class="appointment free">
+                            <div class="apt-time">4:00 PM</div>
+                            <div class="apt-info">
+                                <span class="apt-name">Disponible</span>
+                                <span class="apt-service">Sin reservas</span>
+                            </div>
+                            <div class="apt-badge free-badge">Libre</div>
+                        </div>
+                    </div>
+
+                    <div class="mockup-stats">
+                        <div class="mstat">
+                            <span class="mstat-num">3</span>
+                            <span class="mstat-label">Citas hoy</span>
+                        </div>
+                        <div class="mstat">
+                            <span class="mstat-num">$180k</span>
+                            <span class="mstat-label">Este mes</span>
+                        </div>
+                        <div class="mstat">
+                            <span class="mstat-num">98%</span>
+                            <span class="mstat-label">Asistencia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating notifications -->
+            <div class="float-notif notif-1">
+                <div class="notif-icon">🎉</div>
+                <div class="notif-text">
+                    <strong>Nueva reserva</strong>
+                    <span>Pedro L. · Mañana 11am</span>
+                </div>
+            </div>
+            <div class="float-notif notif-2">
+                <div class="notif-icon">⭐</div>
+                <div class="notif-text">
+                    <strong>Nueva reseña 5★</strong>
+                    <span>"Excelente servicio!"</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- LOGOS / SOCIAL PROOF -->
+<section class="logos-section">
+    <p class="logos-label">Usado por profesionales de todo tipo</p>
+    <div class="logos-row">
+        <span>💆 Estética</span>
+        <span>⚕️ Medicina</span>
+        <span>💼 Consultoría</span>
+        <span>✂️ Barbería</span>
+        <span>🏋️ Fitness</span>
+        <span>📚 Tutoría</span>
+        <span>🦷 Odontología</span>
+        <span>🧘 Bienestar</span>
+    </div>
+</section>
+
+<!-- PROBLEMA / SOLUCIÓN -->
+<section class="problem-section">
+    <div class="section-inner">
+        <div class="problem-grid">
+            <div class="problem-side">
+                <div class="side-label bad">❌ Sin SmartBooking</div>
+                <ul class="problem-list">
+                    <li>Gestionas citas por WhatsApp a toda hora</li>
+                    <li>Doble agendamiento y clientes molestos</li>
+                    <li>No sabes cuánto ganas hasta fin de mes</li>
+                    <li>Clientes se olvidan y no asisten</li>
+                    <li>Pierdes tiempo coordinando manualmente</li>
+                </ul>
+            </div>
+            <div class="vs-divider">VS</div>
+            <div class="solution-side">
+                <div class="side-label good">✅ Con SmartBooking</div>
+                <ul class="solution-list">
+                    <li>Los clientes reservan solos en tu calendario</li>
+                    <li>Cero conflictos, disponibilidad en tiempo real</li>
+                    <li>Dashboard con ingresos y estadísticas al día</li>
+                    <li>Recordatorios automáticos para cada cita</li>
+                    <li>Más tiempo para trabajar, menos para administrar</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+    <div class="section-inner">
+        <div class="section-header">
+            <span class="section-tag">Características</span>
+            <h2>Todo lo que necesitas,<br/>nada de lo que no</h2>
+            <p>Diseñado para profesionales independientes que quieren crecer sin volverse locos con la administración.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card featured">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                </div>
+                <h3>Agenda inteligente</h3>
+                <p>Tus clientes ven tu disponibilidad real y reservan sin llamarte. Tú defines los horarios, el sistema hace el resto.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                </div>
+                <h3>Recordatorios automáticos</h3>
+                <p>Reduce el ausentismo hasta un 60%. Notificaciones automáticas antes de cada cita.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                    </svg>
+                </div>
+                <h3>Reportes y estadísticas</h3>
+                <p>Ingresos, servicios más populares, clientes frecuentes. Todo en un dashboard claro y visual.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <h3>Gestión de clientes</h3>
+                <p>Historial completo de cada cliente: citas anteriores, notas, preferencias y más.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                </div>
+                <h3>Disponibilidad en tiempo real</h3>
+                <p>Sin sobrecargas ni conflictos. Tu agenda siempre actualizada automáticamente.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                    </svg>
+                </div>
+                <h3>100% desde el celular</h3>
+                <p>Gestiona tu negocio desde cualquier lugar. Diseño responsive para móvil y escritorio.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="testimonials">
+    <div class="section-inner">
+        <div class="section-header light">
+            <span class="section-tag light">Casos de éxito</span>
+            <h2>Profesionales que ya<br/>transformaron su negocio</h2>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Antes perdía al menos 2 horas al día coordinando citas por WhatsApp. Ahora mis clientes reservan solos y yo me enfoco en atenderlos bien. Mis ingresos subieron un 35% en 3 meses."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar" style="background:#7c3fd4">LM</div>
+                    <div>
+                        <strong>Laura Martínez</strong>
+                        <span>Nutricionista · Medellín</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card featured-testimonial">
+                <div class="stars">★★★★★</div>
+                <p>"Tengo una barbería con 3 empleados y gestionar las citas era un caos. SmartBooking nos organizó completamente. Los clientes aman poder reservar desde el celular a cualquier hora."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar" style="background:#5612A3">DR</div>
+                    <div>
+                        <strong>Diego Ramírez</strong>
+                        <span>Propietario · Barbería Style · Bogotá</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p>"Como consultora independiente, SmartBooking me da la imagen profesional que necesito. Mis clientes ven un sistema serio y eso genera confianza desde el primer contacto."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar" style="background:#9678D4">SC</div>
+                    <div>
+                        <strong>Sara Castillo</strong>
+                        <span>Consultora Financiera · Cali</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="big-stat">
+                <span class="big-num">60%</span>
+                <span class="big-label">Reducción en ausentismo</span>
+            </div>
+            <div class="big-stat">
+                <span class="big-num">3h</span>
+                <span class="big-label">Ahorradas por semana en promedio</span>
+            </div>
+            <div class="big-stat">
+                <span class="big-num">+35%</span>
+                <span class="big-label">Aumento en ingresos reportado</span>
+            </div>
+            <div class="big-stat">
+                <span class="big-num">4.9★</span>
+                <span class="big-label">Calificación promedio</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+    <div class="section-inner">
+        <div class="section-header">
+            <span class="section-tag">Planes</span>
+            <h2>Simple y transparente</h2>
+            <p>Sin sorpresas. Empieza gratis y escala cuando lo necesites.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">Gratis</div>
+                <div class="plan-price">$0 <span>/mes</span></div>
+                <p class="plan-desc">Para empezar y probar la plataforma</p>
+                <ul class="plan-features">
+                    <li>✓ Hasta 20 citas/mes</li>
+                    <li>✓ 1 servicio</li>
+                    <li>✓ Recordatorios básicos</li>
+                    <li>✓ Panel de gestión</li>
+                    <li class="disabled">✗ Estadísticas avanzadas</li>
+                    <li class="disabled">✗ Múltiples profesionales</li>
+                </ul>
+                <a asp-controller="Account" asp-action="Register" class="plan-btn outline">Comenzar gratis</a>
+            </div>
+
+            <div class="pricing-card popular">
+                <div class="popular-badge">Más popular</div>
+                <div class="plan-name">Pro</div>
+                <div class="plan-price">$49k <span>/mes</span></div>
+                <p class="plan-desc">Para profesionales en crecimiento</p>
+                <ul class="plan-features">
+                    <li>✓ Citas ilimitadas</li>
+                    <li>✓ Servicios ilimitados</li>
+                    <li>✓ Recordatorios automáticos</li>
+                    <li>✓ Estadísticas y reportes</li>
+                    <li>✓ Perfil público personalizado</li>
+                    <li class="disabled">✗ Múltiples profesionales</li>
+                </ul>
+                <a asp-controller="Account" asp-action="Register" class="plan-btn solid">Empezar ahora</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="plan-name">Negocio</div>
+                <div class="plan-price">$120k <span>/mes</span></div>
+                <p class="plan-desc">Para equipos y negocios con varios profesionales</p>
+                <ul class="plan-features">
+                    <li>✓ Todo lo del plan Pro</li>
+                    <li>✓ Hasta 10 profesionales</li>
+                    <li>✓ Panel administrativo</li>
+                    <li>✓ Reportes por profesional</li>
+                    <li>✓ Soporte prioritario</li>
+                    <li>✓ Personalización de marca</li>
+                </ul>
+                <a asp-controller="Account" asp-action="Register" class="plan-btn outline">Contactar ventas</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+    <div class="cta-inner">
+        <div class="cta-orb"></div>
+        <h2>¿Listo para ordenar tu agenda?</h2>
+        <p>Únete a más de 2.000 profesionales que ya usan SmartBooking. Configura tu cuenta en menos de 5 minutos.</p>
+        <a asp-controller="Account" asp-action="Register" class="btn-primary-lg white">
+            Crear cuenta gratis
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="cta-note">Sin tarjeta de crédito · Cancela cuando quieras</p>
+    </div>
+</section>
