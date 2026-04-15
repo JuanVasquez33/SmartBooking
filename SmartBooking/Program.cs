@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartBooking.Application.Interfaces;
+using SmartBooking.Application.Services;
 using SmartBooking.Infrastructure.Auth;
 using SmartBooking.Infrastructure.Persistence;
 
@@ -7,11 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Auth0
 AuthConfig.AddAuth0(builder);
 
-// MySQL con Entity Framework
+// MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
 );
+
+// Servicios
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>(); 
+builder.Services.AddScoped<IServicioService, ServicioService>();
+builder.Services.AddHttpClient<Auth0Service>();
 
 builder.Services.AddControllersWithViews();
 

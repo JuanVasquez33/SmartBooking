@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartBooking")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0821c06b3c59fcafd5ebb6142500e390fe3ea024")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aaf16663dc15d31b58daf00f731dc84a8a672e4d")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartBooking")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartBooking")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,270 @@
+@model SmartBooking.Application.DTOs.MisServiciosViewModel
+@{
+    ViewData["Title"] = "Mis Servicios";
+    Layout = "~/Views/Shared/_LayoutProfesional.cshtml";
+    var nombreSugerido = TempData["NombreSugerido"]?.ToString() ?? "";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Dashboard/Dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Servicios/Servicios.css" asp-append-version="true" />
+}
+
+<div class="servicios-page">
+
+    <!-- Header -->
+    <div class="page-header">
+        <div class="page-header-left">
+            <div class="categoria-badge">
+                <span class="cat-icon">@Model.Icono</span>
+                <div>
+                    <h2>Mis Servicios</h2>
+                    <p>@Model.CategoriaNombre · @Model.Servicios.Count servicio(s) registrado(s)</p>
+                </div>
+            </div>
+        </div>
+        <button class="btn-quick" onclick="abrirModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Nuevo servicio
+        </button>
+    </div>
+
+    <!-- Alertas -->
+    @if (TempData["Exito"] != null)
+    {
+        <div class="alert-success">✓ @TempData["Exito"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert-error-msg">✗ @TempData["Error"]</div>
+    }
+
+    <div class="servicios-layout">
+
+        <!-- Lista de servicios -->
+        <div class="servicios-main">
+            @if (Model.Servicios.Any())
+            {
+                <div class="servicios-grid">
+                    @foreach (var s in Model.Servicios)
+                    {
+                        <div class="servicio-card @(!s.Activo ? "inactivo" : "")">
+                            <div class="servicio-card-header">
+                                <div class="servicio-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                                    </svg>
+                                </div>
+                                <div class="servicio-status">
+                                    <span class="status-dot @(s.Activo ? "active" : "inactive")"></span>
+                                    <span>@(s.Activo ? "Activo" : "Inactivo")</span>
+                                </div>
+                            </div>
+
+                            <div class="servicio-body">
+                                <h3 class="servicio-nombre">@s.Nombre</h3>
+                                @if (!string.IsNullOrEmpty(s.Descripcion))
+                                {
+                                    <p class="servicio-desc">@s.Descripcion</p>
+                                }
+                                <div class="servicio-meta">
+                                    <div class="meta-item">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                                        </svg>
+                                        <span>$@s.Precio.ToString("N0")</span>
+                                    </div>
+                                    <div class="meta-item">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+                                        </svg>
+                                        <span>@s.Duracion min</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="servicio-actions">
+                                <button class="btn-action edit"
+                                    onclick="abrirEditar(@s.Id, '@s.Nombre.Replace("'", "\\'")', '@(s.Descripcion?.Replace("'", "\\'") ?? "")', @s.Precio.ToString(System.Globalization.CultureInfo.InvariantCulture), @s.Duracion)">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                    </svg>
+                                    Editar
+                                </button>
+
+                                <form asp-action="ToggleActivo" asp-controller="Servicio" method="post" style="display:inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@s.Id" />
+                                    <button type="submit" class="btn-action toggle">
+                                        @(s.Activo ? "Desactivar" : "Activar")
+                                    </button>
+                                </form>
+
+                                <form asp-action="Eliminar" asp-controller="Servicio" method="post"
+                                      style="display:inline"
+                                      onsubmit="return confirm('¿Eliminar el servicio «@s.Nombre»? Esta acción no se puede deshacer.')">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@s.Id" />
+                                    <button type="submit" class="btn-action delete">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="3 6 5 6 21 6"/>
+                                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                                            <path d="M10 11v6M14 11v6"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-servicios">
+                    <div class="empty-icon">@Model.Icono</div>
+                    <h3>Aún no tienes servicios</h3>
+                    <p>Agrega los servicios que ofreces para que tus clientes puedan reservar citas contigo.</p>
+                    <button class="btn-quick" onclick="abrirModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Crear primer servicio
+                    </button>
+                </div>
+            }
+        </div>
+
+        <!-- Panel de sugerencias -->
+        @if (Model.Sugerencias.Any())
+        {
+            <div class="sugerencias-panel">
+                <div class="sugerencias-header">
+                    <h3>💡 Sugerencias para tu especialidad</h3>
+                    <p>Servicios típicos de @Model.CategoriaNombre. Haz clic para agregar rápidamente.</p>
+                </div>
+                <div class="sugerencias-list">
+                    @foreach (var sug in Model.Sugerencias)
+                    {
+                        <button class="sugerencia-chip" onclick="usarSugerencia('@sug.Replace("'", "\\'")')">
+                            <span>+</span> @sug
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<!-- Modal Crear/Editar -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModal(event)">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 id="modalTitulo">Nuevo servicio</h3>
+            <button class="modal-close" onclick="cerrarModal()">✕</button>
+        </div>
+
+        <form id="formServicio" asp-action="Crear" asp-controller="Servicio" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" id="servicioId" name="Id" value="0" />
+
+            <div class="field-group">
+                <label>Nombre del servicio *</label>
+                <input type="text" id="inputNombre" name="Nombre" placeholder="Ej: Consulta general"
+                       required maxlength="150" />
+            </div>
+
+            <div class="field-group">
+                <label>Descripción <span class="optional">(opcional)</span></label>
+                <textarea id="inputDescripcion" name="Descripcion"
+                          placeholder="Describe brevemente qué incluye este servicio..."
+                          rows="3" maxlength="500"></textarea>
+            </div>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Precio (COP) *</label>
+                    <div class="input-prefix">
+                        <span>$</span>
+                        <input type="number" id="inputPrecio" name="Precio"
+                               placeholder="50000" min="1" required />
+                    </div>
+                </div>
+                <div class="field-group">
+                    <label>Duración (minutos) *</label>
+                    <div class="input-prefix">
+                        <input type="number" id="inputDuracion" name="Duracion"
+                               placeholder="30" min="1" max="480" required />
+                        <span>min</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+                <button type="submit" class="btn-save" id="btnGuardar">Crear servicio</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    const overlay = document.getElementById('modalOverlay');
+    const form = document.getElementById('formServicio');
+    const titulo = document.getElementById('modalTitulo');
+    const btnGuardar = document.getElementById('btnGuardar');
+    const inputNombre = document.getElementById('inputNombre');
+    const inputDescripcion = document.getElementById('inputDescripcion');
+    const inputPrecio = document.getElementById('inputPrecio');
+    const inputDuracion = document.getElementById('inputDuracion');
+    const servicioId = document.getElementById('servicioId');
+
+    function abrirModal(nombre = '') {
+        form.action = '@Url.Action("Crear", "Servicio")';
+        titulo.textContent = 'Nuevo servicio';
+        btnGuardar.textContent = 'Crear servicio';
+        servicioId.value = '0';
+        inputNombre.value = nombre;
+        inputDescripcion.value = '';
+        inputPrecio.value = '';
+        inputDuracion.value = '';
+        overlay.classList.add('open');
+        inputNombre.focus();
+    }
+
+    function abrirEditar(id, nombre, descripcion, precio, duracion) {
+        form.action = '@Url.Action("Editar", "Servicio")';
+        titulo.textContent = 'Editar servicio';
+        btnGuardar.textContent = 'Guardar cambios';
+        servicioId.value = id;
+        inputNombre.value = nombre;
+        inputDescripcion.value = descripcion;
+        inputPrecio.value = precio;
+        inputDuracion.value = duracion;
+        overlay.classList.add('open');
+        inputNombre.focus();
+    }
+
+    function cerrarModal(e) {
+        if (e && e.target !== overlay) return;
+        overlay.classList.remove('open');
+    }
+
+    function usarSugerencia(nombre) {
+        abrirModal(nombre);
+    }
+
+    // Abrir con nombre sugerido si viene de TempData
+    const nombreSugerido = '@nombreSugerido';
+    if (nombreSugerido) abrirModal(nombreSugerido);
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') overlay.classList.remove('open');
+    });
+</script>
+}

@@ -1,0 +1,141 @@
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutProfesional.cshtml";
+    var nombre = User.FindFirst("name")?.Value ?? "Profesional";
+    var primerNombre = nombre.Split(' ')[0];
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Dashboard/Dashboard.css" asp-append-version="true" />
+}
+
+<div class="dashboard">
+
+    <!-- Bienvenida -->
+    <div class="welcome-bar">
+        <div>
+            <h2>¡Hola, @primerNombre! 👋</h2>
+            <p>@DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-CO"))</p>
+        </div>
+        <a asp-controller="Horarios" asp-action="Crear" class="btn-quick">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Agregar horario
+        </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon purple">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">@ViewBag.CitasHoy</span>
+                <span class="stat-label">Citas hoy</span>
+            </div>
+            <div class="stat-trend up">↑ 2 más que ayer</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon blue">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">@ViewBag.CitasSemana</span>
+                <span class="stat-label">Esta semana</span>
+            </div>
+            <div class="stat-trend up">↑ 15% vs semana pasada</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">@ViewBag.TotalClientes</span>
+                <span class="stat-label">Clientes</span>
+            </div>
+            <div class="stat-trend up">↑ 3 nuevos este mes</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">@ViewBag.IngresosMes</span>
+                <span class="stat-label">Ingresos este mes</span>
+            </div>
+            <div class="stat-trend up">↑ 8% vs mes pasado</div>
+        </div>
+    </div>
+
+    <div class="dashboard-cols">
+
+        <!-- Citas de hoy -->
+        <div class="panel">
+            <div class="panel-header">
+                <h3>Citas de hoy</h3>
+                <a asp-controller="Agenda" asp-action="Hoy" class="panel-link">Ver todas →</a>
+            </div>
+            <div class="panel-body">
+                @if (ViewBag.CitasDelDia != null && ((IEnumerable<dynamic>)ViewBag.CitasDelDia).Any())
+                {
+                    foreach (var cita in ViewBag.CitasDelDia)
+                    {
+                        <div class="cita-item">
+                            <div class="cita-time">@cita.Horario?.HoraInicio.ToString("hh:mm tt")</div>
+                            <div class="cita-avatar">@cita.Cliente?.Usuario?.Nombre?.Substring(0, 1)</div>
+                            <div class="cita-info">
+                                <span class="cita-nombre">@cita.Cliente?.Usuario?.Nombre</span>
+                                <span class="cita-servicio">@cita.Servicio?.Nombre</span>
+                            </div>
+                            <span class="cita-estado @cita.Estado.ToString().ToLower()">@cita.Estado</span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <span>📅</span>
+                        <p>No tienes citas para hoy</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Acciones rápidas -->
+        <div class="panel">
+            <div class="panel-header">
+                <h3>Acciones rápidas</h3>
+            </div>
+            <div class="panel-body">
+                <div class="quick-actions">
+                    <a asp-controller="Servicios" asp-action="Crear" class="quick-action">
+                        <div class="qa-icon purple">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                        </div>
+                        <span>Nuevo servicio</span>
+                    </a>
+                    <a asp-controller="Horarios" asp-action="Crear" class="quick-action">
+                        <div class="qa-icon blue">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+                        </div>
+                        <span>Nuevo horario</span>
+                    </a>
+                    <a asp-controller="Clientes" asp-action="Index" class="quick-action">
+                        <div class="qa-icon green">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                        </div>
+                        <span>Ver clientes</span>
+                    </a>
+                    <a asp-controller="Perfil" asp-action="Index" class="quick-action">
+                        <div class="qa-icon orange">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        </div>
+                        <span>Mi perfil</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

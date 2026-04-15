@@ -12,7 +12,7 @@ namespace SmartBooking.Infrastructure.Persistence
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Profesional> Profesionales { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
-        public DbSet<Horario> Horarios { get; set; }
+        public DbSet<Horario> Horarios { get; set; } 
         public DbSet<Reserva> Reservas { get; set; }
         public DbSet<Notificacion> Notificaciones { get; set; }
 
@@ -28,8 +28,11 @@ namespace SmartBooking.Infrastructure.Persistence
                 e.Property(u => u.Id).HasColumnName("id");
                 e.Property(u => u.Nombre).HasColumnName("nombre").HasMaxLength(100).IsRequired();
                 e.Property(u => u.Email).HasColumnName("email").HasMaxLength(150).IsRequired();
-                e.Property(u => u.Contrasena).HasColumnName("contrasena").HasMaxLength(255);
+                e.Property(c => c.TipoDocumento).HasColumnName("tipoDocumento").HasMaxLength(20).IsRequired();
+                e.Property(u => u.NumeroDocumento).HasColumnName("numeroDocumento").HasMaxLength(30).IsRequired();
                 e.Property(u => u.Telefono).HasColumnName("telefono").HasMaxLength(20);
+                e.Property(u => u.FechaNacimiento).HasColumnName("fechaNacimiento");
+                e.Property(u => u.Direccion).HasColumnName("direccion").HasMaxLength(255);
                 e.Property(u => u.Tipo).HasColumnName("tipo").HasConversion<string>();
                 e.Property(u => u.Activo).HasColumnName("activo");
                 e.Property(u => u.FechaRegistro).HasColumnName("fechaRegistro");
@@ -42,11 +45,7 @@ namespace SmartBooking.Infrastructure.Persistence
                 e.ToTable("cliente");
                 e.HasKey(c => c.Id);
                 e.Property(c => c.Id).HasColumnName("id");
-                e.Property(c => c.FechaNacimiento).HasColumnName("fechaNacimiento");
-                e.Property(c => c.Direccion).HasColumnName("direccion").HasMaxLength(255);
                 e.Property(c => c.Notas).HasColumnName("notas");
-                e.Property(c => c.TipoDocumento).HasColumnName("tipoDocumento").HasMaxLength(20);
-                e.Property(c => c.NumeroDocumento).HasColumnName("numeroDocumento").HasMaxLength(30);
                 e.HasOne(c => c.Usuario)
                     .WithOne()
                     .HasForeignKey<Cliente>(c => c.Id);
@@ -61,7 +60,6 @@ namespace SmartBooking.Infrastructure.Persistence
                 e.Property(p => p.Especialidad).HasColumnName("especialidad").HasMaxLength(150);
                 e.Property(p => p.Descripcion).HasColumnName("descripcion");
                 e.Property(p => p.FotoPerfil).HasColumnName("fotoPerfil").HasMaxLength(500);
-                e.Property(p => p.Direccion).HasColumnName("direccion").HasMaxLength(255);
                 e.HasOne(p => p.Usuario)
                     .WithOne()
                     .HasForeignKey<Profesional>(p => p.Id);

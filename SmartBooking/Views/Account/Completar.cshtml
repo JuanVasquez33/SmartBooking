@@ -1,0 +1,222 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Completa tu perfil - SmartBooking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Account/Login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Account/Register.css" asp-append-version="true" />
+</head>
+<body>
+
+    <div class="completar-wrapper">
+        <div class="completar-container">
+
+            <div class="completar-header">
+                <div class="nav-logo" style="justify-content:center;margin-bottom:1.5rem">
+                    <div class="logo-icon-sm">
+                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="6" y="8" width="36" height="34" rx="4" stroke="var(--primary)" stroke-width="2.5" fill="none"/>
+                            <path d="M16 6v4M32 6v4" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M6 18h36" stroke="var(--primary)" stroke-width="2.5"/>
+                            <rect x="13" y="25" width="6" height="6" rx="1.5" fill="var(--primary)" opacity="0.9"/>
+                            <rect x="21" y="25" width="6" height="6" rx="1.5" fill="var(--primary)" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text-sm">SmartBooking</span>
+                </div>
+
+                <!-- Steps -->
+                <div class="steps">
+                    <div class="step active" id="step-ind-1">
+                        <div class="step-circle">1</div>
+                        <span>Tu rol</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="step-ind-2">
+                        <div class="step-circle">2</div>
+                        <span>Tus datos</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" id="step-ind-3">
+                        <div class="step-circle">3</div>
+                        <span>Listo</span>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-controller="Account" asp-action="Completar" method="post" id="completarForm">
+                @Html.AntiForgeryToken()
+
+                <!-- PASO 1: Elegir rol -->
+                <div class="step-content active" id="step-1">
+                    <h2>¿Cómo usarás SmartBooking?</h2>
+                    <p>Esto nos ayuda a personalizar tu experiencia</p>
+
+                    <div class="role-cards">
+                        <label class="role-card" for="rol-cliente">
+                            <input type="radio" name="tipo" id="rol-cliente" value="cliente" />
+                            <div class="role-card-inner">
+                                <div class="role-icon">👤</div>
+                                <h3>Soy cliente</h3>
+                                <p>Quiero reservar citas con profesionales fácilmente</p>
+                                <div class="role-check">✓</div>
+                            </div>
+                        </label>
+
+                        <label class="role-card" for="rol-profesional">
+                            <input type="radio" name="tipo" id="rol-profesional" value="profesional" />
+                            <div class="role-card-inner">
+                                <div class="role-icon">💼</div>
+                                <h3>Soy profesional</h3>
+                                <p>Quiero gestionar mi agenda y recibir reservas</p>
+                                <div class="role-check">✓</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <button type="button" class="btn-login" id="btn-next-1" onclick="goToStep2()" disabled>
+                        <span>Continuar</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+
+                <!-- PASO 2: Datos personales -->
+                <div class="step-content" id="step-2">
+                    <h2>Completa tu perfil</h2>
+                    <p>Solo necesitamos un par de datos más</p>
+
+                    <div class="field-group">
+                        <label>Tipo de documento</label>
+                        <div class="field-wrapper">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                            </svg>
+                            <select name="tipoDocumento" id="tipoDocumento" required>
+                                <option value="" disabled selected>Selecciona tu documento</option>
+                                <option value="CC">Cédula de Ciudadanía (CC)</option>
+                                <option value="CE">Cédula de Extranjería (CE)</option>
+                                <option value="PA">Pasaporte (PA)</option>
+                                <option value="TI">Tarjeta de Identidad (TI)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Número de documento</label>
+                        <div class="field-wrapper">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            <input type="text" name="numeroDocumento" id="numeroDocumento" placeholder="1234567890" required />
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Fecha de nacimiento</label>
+                        <div class="field-wrapper">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            <input type="date" name="fechaNacimiento" id="fechaNacimiento" required />
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Direccion</label>
+                        <div class="field-wrapper">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            <input type="text" name="direccion" id="direccion" placeholder="Calle 123 #45-67" required />
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Teléfono <span class="optional">(opcional)</span></label>
+                        <div class="field-wrapper">
+                            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            <input type="tel" name="telefono" id="telefono" placeholder="3001234567" required />
+                        </div>
+                    </div>
+
+                    <!-- Solo para profesionales -->
+                    <div id="campos-profesional" style="display:none">
+                        <div class="field-group">
+                            <label>Especialidad</label>
+                            <div class="field-wrapper">
+                                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+                                </svg>
+                                <input type="text" name="especialidad" id="especialidad" placeholder="Ej: Medicina general, Peluquería, Consultoría..." />
+                            </div>
+                        </div>
+
+                        <div class="field-group">
+                            <label>Descripción de tus servicios <span class="optional">(opcional)</span></label>
+                            <textarea name="descripcion" id="descripcion" placeholder="Cuéntale a tus clientes qué ofreces..." rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="btn-back" onclick="goToStep1()">
+                            ← Volver
+                        </button>
+                        <button type="submit" class="btn-login" style="flex:1">
+                            <span>Finalizar registro</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        // Activar botón al seleccionar rol
+        document.querySelectorAll('input[name="tipo"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('btn-next-1').disabled = false;
+
+                // Mostrar/ocultar campos de profesional
+                const camposPro = document.getElementById('campos-profesional');
+                camposPro.style.display = this.value === 'profesional' ? 'block' : 'none';
+
+                // Marcar card seleccionada
+                document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+                this.closest('.role-card').classList.add('selected');
+            });
+        });
+
+        function goToStep2() {
+            const tipo = document.querySelector('input[name="tipo"]:checked');
+            if (!tipo) return;
+
+            document.getElementById('step-1').classList.remove('active');
+            document.getElementById('step-2').classList.add('active');
+
+            // Actualizar indicadores
+            document.getElementById('step-ind-1').classList.add('done');
+            document.getElementById('step-ind-2').classList.add('active');
+        }
+
+        function goToStep1() {
+            document.getElementById('step-2').classList.remove('active');
+            document.getElementById('step-1').classList.add('active');
+            document.getElementById('step-ind-2').classList.remove('active');
+            document.getElementById('step-ind-1').classList.remove('done');
+            document.getElementById('step-ind-1').classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -42,6 +42,7 @@ C:\Users\Usuario\Desktop\JUAN\Semestre 8 2026-1\Arquitectura 2\SmartBooking\Smar
 C:\Users\Usuario\Desktop\JUAN\Semestre 8 2026-1\Arquitectura 2\SmartBooking\SmartBooking\obj\Debug\net8.0\SmartBooking.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Usuario\Desktop\JUAN\Semestre 8 2026-1\Arquitectura 2\SmartBooking\SmartBooking\obj\Debug\net8.0\SmartBooking.RazorAssemblyInfo.cache
 C:\Users\Usuario\Desktop\JUAN\Semestre 8 2026-1\Arquitectura 2\SmartBooking\SmartBooking\obj\Debug\net8.0\SmartBooking.RazorAssemblyInfo.cs
+C:\Users\Usuario\Desktop\JUAN\Semestre 8 2026-1\Arquitectura 2\SmartBooking\SmartBooking\obj\Debug\net8.0\SmartBooking.sourcelink.json
 C:\Users\Usuario\Desktop\JUAN\Semestre 8 2026-1\Arquitectura 2\SmartBooking\SmartBooking\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\Usuario\Desktop\JUAN\Semestre 8 2026-1\Arquitectura 2\SmartBooking\SmartBooking\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\Usuario\Desktop\JUAN\Semestre 8 2026-1\Arquitectura 2\SmartBooking\SmartBooking\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json

@@ -15,8 +15,8 @@ namespace SmartBooking.Infrastructure.Auth
                 })
                 .WithAccessToken(options =>
                 {
-                    options.Audience = "https://servicebooking.api"; // TU API
-                    options.Scope = "openid profile"; // permisos se agregan vía Action
+                    options.Audience = "https://servicebooking.api";
+                    options.Scope = "openid profile email";
                 });
         }
     }

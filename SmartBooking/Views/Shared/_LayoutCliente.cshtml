@@ -1,0 +1,250 @@
+@using System.Security.Claims
+@{
+    var nombre = User.FindFirst("name")?.Value ?? User.FindFirst(ClaimTypes.Name)?.Value ?? "Cliente";
+    var iniciales = string.Join("", nombre.Split(' ').Take(2).Select(p => p[0].ToString().ToUpper()));
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SmartBooking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Shared/Layout.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <div class="logo-img" style="background: linear-gradient(135deg, #5612A3, #9678D4);">
+                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="8" width="36" height="34" rx="4" stroke="white" stroke-width="2.5" fill="none"/>
+                        <path d="M16 6v4M32 6v4" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M6 18h36" stroke="white" stroke-width="2.5"/>
+                        <rect x="13" y="25" width="6" height="6" rx="1.5" fill="white" opacity="0.9"/>
+                        <rect x="21" y="25" width="6" height="6" rx="1.5" fill="white" opacity="0.5"/>
+                        <rect x="29" y="25" width="6" height="6" rx="1.5" fill="white" opacity="0.25"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="brand">SmartBooking</span>
+                    <span class="subtitle">MI CUENTA</span>
+                </div>
+            </div>
+            <button class="collapse-btn" id="collapseBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <h3 class="nav-section-title">Principal</h3>
+                <ul>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="DashboardCliente" asp-action="Index" data-title="Dashboard">
+                            <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                            </svg>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Reservas" asp-action="Crear" data-title="Reservar Cita">
+                            <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 13H6v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1z"/>
+                            </svg>
+                            <span>Reservar Cita</span>
+                        </a>
+                    </li>
+                    <li class="nav-item has-submenu">
+                        <a href="#" class="nav-link" data-title="Mis Reservas">
+                            <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/>
+                            </svg>
+                            <span>Mis Reservas</span>
+                            <svg class="submenu-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                            </svg>
+                        </a>
+                        <ul class="submenu">
+                            <li class="submenu-item">
+                                <a class="submenu-link" asp-controller="Reservas" asp-action="Proximas">Próximas</a>
+                            </li>
+                            <li class="submenu-item">
+                                <a class="submenu-link" asp-controller="Reservas" asp-action="Historial">Historial</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Profesionales" asp-action="Index" data-title="Profesionales">
+                            <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 6h-2.18c.07-.44.18-.88.18-1.34C18 2.54 15.46 1 12 1S6 2.54 6 4.66C6 5.12 6.11 5.56 6.18 6H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8-3c1.94 0 3.5.73 3.5 1.66S13.94 6.32 12 6.32 8.5 5.59 8.5 4.66 10.06 3 12 3zm0 9c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm8 8H4v-1c0-2.67 5.33-4 8-4s8 1.33 8 4v1z"/>
+                            </svg>
+                            <span>Profesionales</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-section-title">Cuenta</h3>
+                <ul>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Perfil" asp-action="Index" data-title="Mi Perfil">
+                            <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            <span>Mi Perfil</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a asp-controller="Account" asp-action="Logout" class="logout-link">
+                <svg class="nav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                </svg>
+                <span>Cerrar sesión</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Top Header -->
+    <header class="top-header" id="topHeader">
+        <div class="header-left">
+            <button class="menu-toggle" id="menuToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                </svg>
+            </button>
+            <h1 class="page-title">@ViewData["Title"]</h1>
+        </div>
+        <div class="header-right">
+            <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                </svg>
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.06 7 9.54 0 4.48-2.94 8.27-7 9.54.95.3 1.95.46 3 .46 5.52 0 10-4.48 10-10S14.52 2 9 2z"/>
+                </svg>
+            </button>
+            <button class="notifications-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
+                </svg>
+                <span class="notification-badge"></span>
+            </button>
+            <div class="user-menu">
+                <div class="user-avatar">@iniciales</div>
+                <div class="user-info">
+                    <span class="user-name">@nombre</span>
+                    <span class="user-role">Cliente</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content" id="mainContent">
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+    </main>
+
+    <div class="admin-footer">
+        <p>&copy; 2026 SmartBooking · Todos los derechos reservados.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const collapseBtn = document.getElementById('collapseBtn');
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const topHeader = document.getElementById('topHeader');
+            const mainContent = document.getElementById('mainContent');
+            const themeToggle = document.getElementById('themeToggle');
+
+            function applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+            }
+            const savedTheme = localStorage.getItem('theme') ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(savedTheme);
+            themeToggle.addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme');
+                applyTheme(current === 'dark' ? 'light' : 'dark');
+            });
+
+            if (collapseBtn) {
+                collapseBtn.addEventListener('click', () => {
+                    const collapsing = !sidebar.classList.contains('collapsed');
+                    sidebar.classList.toggle('collapsed');
+                    topHeader.classList.toggle('sidebar-collapsed');
+                    mainContent.classList.toggle('sidebar-collapsed');
+                    if (collapsing) {
+                        document.querySelectorAll('.nav-item.has-submenu').forEach(i => i.classList.remove('open'));
+                    }
+                    localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+                });
+                if (localStorage.getItem('sidebarCollapsed') === 'true') {
+                    sidebar.classList.add('collapsed');
+                    topHeader.classList.add('sidebar-collapsed');
+                    mainContent.classList.add('sidebar-collapsed');
+                }
+            }
+
+            menuToggle?.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+            });
+            sidebarOverlay?.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+
+            document.querySelectorAll('.nav-item.has-submenu > .nav-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (!sidebar.classList.contains('collapsed')) {
+                        const item = this.parentElement;
+                        document.querySelectorAll('.nav-item.has-submenu').forEach(i => {
+                            if (i !== item) i.classList.remove('open');
+                        });
+                        item.classList.toggle('open');
+                    }
+                });
+            });
+
+            const path = window.location.pathname;
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href !== '#' && path.startsWith(href)) {
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+            document.querySelectorAll('.submenu-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && path.startsWith(href)) {
+                    link.classList.add('active');
+                    const parent = link.closest('.nav-item.has-submenu');
+                    if (parent && !sidebar.classList.contains('collapsed')) parent.classList.add('open');
+                }
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

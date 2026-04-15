@@ -1,0 +1,138 @@
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutCliente.cshtml";
+    var nombre = User.FindFirst("name")?.Value ?? "Cliente";
+    var primerNombre = nombre.Split(' ')[0];
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Dashboard/Dashboard.css" asp-append-version="true" />
+}
+
+<div class="dashboard">
+
+    <!-- Bienvenida -->
+    <div class="welcome-bar">
+        <div>
+            <h2>¡Hola, @primerNombre! 👋</h2>
+            <p>@DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-CO"))</p>
+        </div>
+        <a asp-controller="Reservas" asp-action="Crear" class="btn-quick">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Reservar cita
+        </a>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon purple">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">@ViewBag.ProximasCitas</span>
+                <span class="stat-label">Próximas citas</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon blue">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">@ViewBag.TotalReservas</span>
+                <span class="stat-label">Total reservas</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">@ViewBag.ReservasCompletadas</span>
+                <span class="stat-label">Completadas</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.34C18 2.54 15.46 1 12 1S6 2.54 6 4.66C6 5.12 6.11 5.56 6.18 6H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-8-3c1.94 0 3.5.73 3.5 1.66S13.94 6.32 12 6.32 8.5 5.59 8.5 4.66 10.06 3 12 3zm0 9c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm8 8H4v-1c0-2.67 5.33-4 8-4s8 1.33 8 4v1z"/></svg>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">@ViewBag.ProfesionalesFavoritos</span>
+                <span class="stat-label">Profesionales</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-cols">
+
+        <!-- Próximas citas -->
+        <div class="panel">
+            <div class="panel-header">
+                <h3>Mis próximas citas</h3>
+                <a asp-controller="Reservas" asp-action="Proximas" class="panel-link">Ver todas →</a>
+            </div>
+            <div class="panel-body">
+                @if (ViewBag.ProximasReservas != null && ((IEnumerable<dynamic>)ViewBag.ProximasReservas).Any())
+                {
+                    foreach (var reserva in ViewBag.ProximasReservas)
+                    {
+                        <div class="cita-item">
+                            <div class="cita-time">@reserva.Fecha.ToString("dd MMM")</div>
+                            <div class="cita-avatar">@reserva.Profesional?.Usuario?.Nombre?.Substring(0, 1)</div>
+                            <div class="cita-info">
+                                <span class="cita-nombre">@reserva.Profesional?.Usuario?.Nombre</span>
+                                <span class="cita-servicio">@reserva.Servicio?.Nombre · @reserva.Horario?.HoraInicio.ToString("hh:mm tt")</span>
+                            </div>
+                            <span class="cita-estado @reserva.Estado.ToString().ToLower()">@reserva.Estado</span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <span>📅</span>
+                        <p>No tienes citas próximas</p>
+                        <a asp-controller="Reservas" asp-action="Crear" class="btn-quick" style="margin-top:1rem">Reservar ahora</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Acciones rápidas -->
+        <div class="panel">
+            <div class="panel-header">
+                <h3>Acciones rápidas</h3>
+            </div>
+            <div class="panel-body">
+                <div class="quick-actions">
+                    <a asp-controller="Reservas" asp-action="Crear" class="quick-action">
+                        <div class="qa-icon purple">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 13H6v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1z"/></svg>
+                        </div>
+                        <span>Reservar cita</span>
+                    </a>
+                    <a asp-controller="Profesionales" asp-action="Index" class="quick-action">
+                        <div class="qa-icon blue">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.44.18-.88.18-1.34C18 2.54 15.46 1 12 1S6 2.54 6 4.66c0 .46.11.9.18 1.34H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+                        </div>
+                        <span>Profesionales</span>
+                    </a>
+                    <a asp-controller="Reservas" asp-action="Historial" class="quick-action">
+                        <div class="qa-icon green">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+                        </div>
+                        <span>Historial</span>
+                    </a>
+                    <a asp-controller="Perfil" asp-action="Index" class="quick-action">
+                        <div class="qa-icon orange">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        </div>
+                        <span>Mi perfil</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
