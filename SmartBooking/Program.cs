@@ -20,6 +20,8 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>(); 
 builder.Services.AddScoped<IServicioService, ServicioService>();
 builder.Services.AddHttpClient<Auth0Service>();
+builder.Services.AddSingleton<KafkaProducerService>();
+builder.Services.AddHostedService<KafkaConsumerWorker>();
 
 builder.Services.AddControllersWithViews();
 

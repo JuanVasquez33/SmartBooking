@@ -11,12 +11,14 @@ namespace SmartBooking.Controllers
     public class ServicioController : Controller
     {
         private readonly IServicioService _servicioService;
-        private readonly IUsuarioService _usuarioService;
+        private readonly IUsuarioService _usuarioService; 
+        private readonly KafkaProducerService _kafka;
 
-        public ServicioController(IServicioService servicioService, IUsuarioService usuarioService)
+        public ServicioController(IServicioService servicioService, IUsuarioService usuarioService, KafkaProducerService kafka)
         {
             _servicioService = servicioService;
             _usuarioService = usuarioService;
+            _kafka = kafka;
         }
 
         private UsuarioDto? GetUsuarioActual()
@@ -72,7 +74,7 @@ namespace SmartBooking.Controllers
         // POST: /Servicio/Editar
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Editar(EditarServicioDto dto)
+        public async Task<IActionResult> Editar(EditarServicioDto dto)
         {
             var usuario = GetUsuarioActual();
             if (usuario == null) return RedirectToAction("Completar", "Account");
@@ -84,6 +86,14 @@ namespace SmartBooking.Controllers
             }
 
             _servicioService.Editar(dto.Id, usuario.Id, dto);
+      
+            await _kafka.PublicarAsync(
+                nivel: "INFO",
+                proceso: "ServicioController.Editar",
+                mensaje: $"Servicio '{dto.Nombre}' (Id: {dto.Id}) editado",
+                usuarioId: usuario.Id
+            );
+            
             TempData["Exito"] = "Servicio actualizado exitosamente.";
             return RedirectToAction("Index");
         }

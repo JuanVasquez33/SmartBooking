@@ -2,6 +2,7 @@ wwwroot\css\Account\Login.css
 wwwroot\css\Account\Register.css
 wwwroot\css\Dashboard\Dashboard.css
 wwwroot\css\Landing\Landing.css
+wwwroot\css\Servicios\Servicios.css
 wwwroot\css\Shared\Layout.css
 wwwroot\css\Shared\LoadingScreen.css
 wwwroot\css\site.css
@@ -65,4 +66,3 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\css\Servicios\Servicios.css

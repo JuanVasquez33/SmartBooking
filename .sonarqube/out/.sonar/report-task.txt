@@ -1,0 +1,6 @@
+projectKey=SmartBooking
+serverUrl=http://localhost:9000
+serverVersion=26.4.0.121862
+dashboardUrl=http://localhost:9000/dashboard?id=SmartBooking
+ceTaskId=d3fde4e3-0ac2-4b82-8268-1a7c803cec33
+ceTaskUrl=http://localhost:9000/api/ce/task?id=d3fde4e3-0ac2-4b82-8268-1a7c803cec33

@@ -15,6 +15,7 @@ namespace SmartBooking.Infrastructure.Persistence
         public DbSet<Horario> Horarios { get; set; } 
         public DbSet<Reserva> Reservas { get; set; }
         public DbSet<Notificacion> Notificaciones { get; set; }
+        public DbSet<AppLog> AppLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -132,6 +133,18 @@ namespace SmartBooking.Infrastructure.Persistence
                 e.Property(n => n.ReservaId).HasColumnName("reserva_id");
                 e.HasOne(n => n.Usuario).WithMany().HasForeignKey(n => n.UsuarioId);
                 e.HasOne(n => n.Reserva).WithMany().HasForeignKey(n => n.ReservaId);
+            });
+
+            modelBuilder.Entity<AppLog>(e =>
+            {
+                e.ToTable("AppLogs");
+                e.HasKey(a => a.Id);
+                e.Property(a => a.Id).HasColumnName("Id");
+                e.Property(a => a.Nivel).HasColumnName("Nivel").HasMaxLength(10).IsRequired();
+                e.Property(a => a.Proceso).HasColumnName("Proceso").HasMaxLength(200).IsRequired();
+                e.Property(a => a.Mensaje).HasColumnName("Mensaje").IsRequired();
+                e.Property(a => a.UsuarioId).HasColumnName("UsuarioId");
+                e.Property(a => a.CreadoEn).HasColumnName("CreadoEn");
             });
         }
     }
